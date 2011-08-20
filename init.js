@@ -16,8 +16,10 @@ window.onload = function()
 
 	var shape
 		, i
-		, options = {}
+		, options = {data:{}, shapes:{}}
 		;
+
+		options.data.isMe = true;
 
 for(i = 0; i < 2; i++){
 	shape = i % 2 ? 'ellipse' : 'circle';

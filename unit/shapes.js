@@ -45,13 +45,19 @@ game.unit.shapes = Klass({
     }
 
 
-    shape = this['get'+shapeType](params);
+    this.shape = shape = this['get'+shapeType](params);
+		shape.id = game.unit.factory.getNextId();
+		shape.desc = shapeType + '_'+ shape.id;
 
 
     this.canvas = canvas;
     this.scene = new CanvasNode();
     this.scene.effect = this;
 		this.scene.append(shape);
+
+		if(shapeType === 'line'){
+			return this;
+		}
 
 
 
@@ -65,25 +71,62 @@ game.unit.shapes = Klass({
 		shape.addFrameListener( this.shapeControl );
 
 
-    this.scene.strokeWidth = 3
-    this.scene.rotation = [0.05, this.canvas.width/2, this.canvas.height/2]
-    this.scene.compositeOperation = 'lighter'
-    this.scene.fill = new Gradient(params.gradient || this.shapeGradient)
-    this.scene.stroke = '#ffeeaa'
+    this.scene.strokeWidth = 3;
+    this.scene.rotation = [0.05, this.canvas.width/2, this.canvas.height/2];
+    this.scene.compositeOperation = 'lighter';
+    this.scene.fill = new Gradient(params.gradient || this.shapeGradient);
+    this.scene.stroke = '#ffeeaa';
 
 		this.scene.when('keydown', function(ev) {
 	 		ev.preventDefault()}
-		)
+		);
 		this.scene.when('keypress', function(ev) {
 			 ev.preventDefault()}
-		 )
+		 );
 		this.scene.when('keyup', function(ev) {
 			 ev.preventDefault()}
-		 )
+		 );
+
+		this.scene.when('mousedown', function(e){
+			var id
+				, unit
+				, x
+				, y
+				, line
+				;
+			x = shape.x;
+			y = shape.y;
+
+
+			id = e.canvasTarget.id;
+
+			unit = game.unit.factory.unitList.get(id);
+			if(!unit.data.isMe){
+				return false;
+			}
+
+			game.unit.factory.unitList.selected = unit;
+
+			if(!shape.line){
+				shape.line = new Line(shape.x, shape.y, e.x, e.y);
+				this.append(shape.line);
+			}
+			shape.line.stroke = true;
+
+
+			return false;
+		});
+
+
+		this.scene.when('mouseup', function(e){
+			if(shape.line){
+				shape.line.stroke = false;
+			}
+		});
   },
 
 shapeControl: function(t){
-	if(this.focused){
+	if(this.focused && this.unit.data.isMe){
 	var d = 1;
 	 if ( this.root.keys.left )
 		 this.x -= d;
@@ -93,6 +136,12 @@ shapeControl: function(t){
 		 this.y -= d;
 	 if (this.root.keys.down )
 		 this.y += d;
+
+		if(this.line){
+			this.line.x1 = this.x;
+			this.line.y1 = this.y;
+		}
+
 
     this.scale = 1.5+Math.cos(this.offset*Math.PI*4 + t/1600);
 	}
@@ -225,10 +274,9 @@ shapeControl: function(t){
 		}
 
     shape = new Line(options.x1, options.y1,options.x2, options.y2);
+    shape.stroke = true;
     shape.shapes = this;
    	shape.offset = options.offset;
-		shape.y = options.y;
-		shape.x = options.x;
 
 		return shape;
   }

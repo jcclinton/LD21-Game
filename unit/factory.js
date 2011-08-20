@@ -1,7 +1,7 @@
 game.unit = {};
 game.unit.factory = (function(){
 	var me = {}
-		, intLayer
+		, unitLayer
 		;
 
 
@@ -35,8 +35,13 @@ game.unit.factory = (function(){
 	});
 
 	me.init = function(canvas){
-		intLayer = new CanvasNode();
-		canvas.append(intLayer);
+		unitLayer = new CanvasNode();
+		unitLayer.desc = "Unit Layer";
+		canvas.append(unitLayer);
+	};
+
+	me.append = function(node){
+		unitLayer.append(node);
 	};
 
 	me.spawn = function(name, options){
@@ -52,6 +57,7 @@ game.unit.factory = (function(){
 			, tempObj = {}
 			, i
 			, l
+			, id
 			;
 
 		map = game.unit.map[name];
@@ -60,8 +66,6 @@ game.unit.factory = (function(){
 			console.warn('map key: ' + name + ' does not exist');
 			return;
 		}
-
-		//debugger;
 
 		myGreatConstructor.prototype = new game.unit.shapes(name, game.canvas, options.shapes || {});
 
@@ -86,11 +90,11 @@ game.unit.factory = (function(){
 
 		obj = new myGreatConstructor();
 
+		obj.shape.unit = obj;
 
 
 		defaults = {
-			isMe: true,
-			selected: false
+			isMe: false
 		};
 
 		initData = me.extend({}, defaults, map.init || {});
@@ -98,12 +102,46 @@ game.unit.factory = (function(){
 		for(key in defaults){
 			obj.data[key] =  initData[key];
 		}
-		obj.data.id = me.getNextId();
+		if(options.data !== void 0){
+			for(key in options.data){
+				obj.data[key] =  options.data[key];
+			}
+		}
 
-		intLayer.append(obj.scene);
+		unitLayer.append(obj.scene);
+
+
+		me.unitList.add(obj.shape.id, obj);
 
 		return obj;
 	};
+
+
+	me.unitList = (function(){
+		var lst = {
+			"table": {}
+		};
+
+		lst.add = function(id, obj) {
+			return (lst.table[id] = obj);
+		};
+
+		lst.remove = function(id) {
+			return delete lst.table[id];
+		};
+
+		lst.get = function(id) {
+			return lst.table[id]?lst.table[id]:false;
+		};
+
+		lst.getAll = function() {
+			return lst.table;
+		};
+
+		lst.selected = null;
+
+		return lst;
+	}());
 
 
 	return me;
