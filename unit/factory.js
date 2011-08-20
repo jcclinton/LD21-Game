@@ -70,7 +70,7 @@ game.unit.factory = (function(){
 		myGreatConstructor.prototype = new game.unit.shapes(name, game.canvas, options.shapes || {});
 
 
-		me.extend(myGreatConstructor.prototype, game.unit.unitBase);
+		me.extend(myGreatConstructor.prototype, game.unit.unitBase());
 
 
 		// extend base objects
@@ -91,6 +91,8 @@ game.unit.factory = (function(){
 		obj = new myGreatConstructor();
 
 		obj.shape.unit = obj;
+
+		//obj.shape.addFrameListener( obj.unitControl );
 
 
 		defaults = {

@@ -55,10 +55,6 @@ game.unit.shapes = Klass({
     this.scene.effect = this;
 		this.scene.append(shape);
 
-		if(shapeType === 'line'){
-			return this;
-		}
-
 
 
 		shape.when('focus', function(){
@@ -126,6 +122,8 @@ game.unit.shapes = Klass({
   },
 
 shapeControl: function(t){
+	this.unit.checkPath.call(this);
+	this.unit.moveUnit.call(this);
 	if(this.focused && this.unit.data.isMe){
 	var d = 1;
 	 if ( this.root.keys.left )
@@ -143,7 +141,7 @@ shapeControl: function(t){
 		}
 
 
-    this.scale = 1.5+Math.cos(this.offset*Math.PI*4 + t/1600);
+    this.scale = 1.5+Math.cos(this.offset*Math.PI*4 + t/400);
 	}
 	this.fill = this.shapes.fill;
 	this.stroke = this.shapes.stroke;
