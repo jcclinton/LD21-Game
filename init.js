@@ -14,7 +14,14 @@ window.onload = function()
 	game.unit.factory.init(game.canvas);
 
 
-for(var i = 0; i < 1; i++)
-game.unit.factory.spawn('ellipse');
+	var shape
+		, i
+		, options = {}
+		;
+
+for(i = 0; i < 2; i++){
+	shape = i % 2 ? 'ellipse' : 'circle';
+	game.unit.factory.spawn(shape,options);
+}
 
 };

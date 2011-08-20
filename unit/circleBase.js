@@ -1,5 +1,5 @@
 
-game.unit.circle = Klass({
+game.unit.shapes = Klass({
   controls : [
     'stroke',
     'fill',
@@ -8,7 +8,7 @@ game.unit.circle = Klass({
   stroke : false,
   fill : true,
 
-  circleGradient : {
+  shapeGradient : {
     type : 'radial',
     endRadius : 15,
     colorStops : [
@@ -18,34 +18,57 @@ game.unit.circle = Klass({
     ]
   },
 
-  initialize : function(canvas) {
-		var num = 1
-			, offset =  4 * Math.PI
-			;
+  params: {
+  	circle: ['radius'],
+  	ellipse: ['radiusx', 'radiusy'],
+  	rectangle: ['width', 'height'],
+  	line: ['x1','y1','x2','y2']
+  },
 
-    game.unit.factory.effect.initialize.call(this, canvas);
 
 
-    var circle = new Circle(15);
-    circle.circles = this;
-   	circle.offset = offset;
-		circle.y = 100;
 
-		circle.when('focus', function(){
+
+
+
+
+
+
+
+
+  initialize : function(shapeType, canvas, params) {
+    var shape;
+
+    if(!this['get'+shapeType]){
+    	console.warn('bad shape: ' + shapeType + ' passed into shape wrapper');
+    	return;
+    }
+
+
+    shape = this['get'+shapeType](params);
+
+
+    this.canvas = canvas;
+    this.scene = new CanvasNode();
+    this.scene.effect = this;
+		this.scene.append(shape);
+
+
+
+		shape.when('focus', function(){
 			this.focused = true;
 		});
-		circle.when('blur', function(){
+		shape.when('blur', function(){
 			this.focused = false;
 		});
 
-		circle.addFrameListener( this.circleControl );
+		shape.addFrameListener( this.shapeControl );
 
-		this.scene.append(circle);
 
     this.scene.strokeWidth = 3
     this.scene.rotation = [0.05, this.canvas.width/2, this.canvas.height/2]
     this.scene.compositeOperation = 'lighter'
-    this.scene.fill = new Gradient(this.circleGradient)
+    this.scene.fill = new Gradient(params.gradient || this.shapeGradient)
     this.scene.stroke = '#ffeeaa'
 
 		this.scene.when('keydown', function(ev) {
@@ -59,30 +82,154 @@ game.unit.circle = Klass({
 		 )
   },
 
-circleControl: function(t){
+shapeControl: function(t){
 	if(this.focused){
-	var d = 1
+	var d = 1;
 	 if ( this.root.keys.left )
-		 this.x -= d
+		 this.x -= d;
 	 if ( this.root.keys.right )
-		 this.x += d
+		 this.x += d;
 	 if (this.root.keys.up )
-		 this.y -= d
+		 this.y -= d;
 	 if (this.root.keys.down )
-		 this.y += d
+		 this.y += d;
 
-    this.scale = 1.5+Math.cos(this.offset*Math.PI*4 + t/1600)
+    this.scale = 1.5+Math.cos(this.offset*Math.PI*4 + t/1600);
 	}
-	this.fill = this.circles.fill
-	this.stroke = this.circles.stroke
+	this.fill = this.shapes.fill;
+	this.stroke = this.shapes.stroke;
  },
 
-  circleMotion : function(t) {
-    this.fill = this.circles.fill
-    this.stroke = this.circles.stroke
-    var trw = this.root.width+160
-    this.x = -50 + ((t/15 + (this.offset / (4*Math.PI) * trw)) % trw)
-    this.y = this.root.height*0.5 + Math.sin(this.offset + t/400) * 20
-    this.scale = 1.5+Math.cos(this.offset*Math.PI*4 + t/1600)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  getcircle: function(params){
+  	var defaults
+  		, shape
+  		, key
+  		, options = {}
+  		;
+
+		params = params || {};
+
+		defaults = {
+			offset: 4 * Math.PI,
+			radius: 15,
+			x: 0,
+			y: 100,
+		};
+
+		for(key in defaults){
+			options[key] = params[key] ? params[key] : defaults[key];
+		}
+
+    shape = new Circle(options.radius);
+    shape.shapes = this;
+   	shape.offset = options.offset;
+		shape.y = options.y;
+		shape.x = options.x;
+
+		return shape;
+  },
+
+  getellipse: function(params){
+  	var defaults
+  		, shape
+  		, key
+  		, options = {}
+  		;
+
+		params = params || {};
+
+		defaults = {
+			offset: 4 * Math.PI,
+			radiusx: 15,
+			radiusy: 5,
+			x: 0,
+			y: 100,
+		};
+
+		for(key in defaults){
+			options[key] = params[key] ? params[key] : defaults[key];
+		}
+
+    shape = new Ellipse(options.radiusx, options.radiusy);
+    shape.shapes = this;
+   	shape.offset = options.offset;
+		shape.y = options.y;
+		shape.x = options.x;
+
+		return shape;
+  },
+
+  getrectangle: function(params){
+  	var defaults
+  		, shape
+  		, key
+  		, options = {}
+  		;
+
+		params = params || {};
+
+		defaults = {
+			offset: 4 * Math.PI,
+			w: 15,
+			h: 5,
+			x: 0,
+			y: 100,
+		};
+
+		for(key in defaults){
+			options[key] = params[key] ? params[key] : defaults[key];
+		}
+
+    shape = new Rectangle(options.w, options.h);
+    shape.shapes = this;
+   	shape.offset = options.offset;
+		shape.y = options.y;
+		shape.x = options.x;
+
+		return shape;
+  },
+
+  getline: function(params){
+  	var defaults
+  		, shape
+  		, key
+  		, options = {}
+  		;
+
+		params = params || {};
+
+		defaults = {
+			offset: 4 * Math.PI,
+			x1: 15,
+			y1: 5,
+			x2: 100,
+			y2: 100,
+		};
+
+		for(key in defaults){
+			options[key] = params[key] ? params[key] : defaults[key];
+		}
+
+    shape = new Line(options.x1, options.y1,options.x2, options.y2);
+    shape.shapes = this;
+   	shape.offset = options.offset;
+		shape.y = options.y;
+		shape.x = options.x;
+
+		return shape;
   }
 })

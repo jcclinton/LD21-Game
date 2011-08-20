@@ -39,7 +39,7 @@ game.unit.factory = (function(){
 		canvas.append(intLayer);
 	};
 
-	me.spawn = function(name, options, world, position){
+	me.spawn = function(name, options){
 
 		var key
 			, defaults
@@ -63,7 +63,7 @@ game.unit.factory = (function(){
 
 		//debugger;
 
-		myGreatConstructor.prototype = new game.unit[name](game.canvas);
+		myGreatConstructor.prototype = new game.unit.shapes(name, game.canvas, options.shapes || {});
 
 
 		me.extend(myGreatConstructor.prototype, game.unit.unitBase);
