@@ -56,16 +56,18 @@ game.unit.factory = (function(){
 			, i
 			, l
 			, id
+			, klass
 			;
 
 		map = game.unit.map[name];
+		klass = map.klass;
 
 		if(!map){
 			console.warn('map key: ' + name + ' does not exist');
 			return;
 		}
 
-		myGreatConstructor.prototype = new game.unit.shapes(name, game.canvas, options.shapes || {});
+		myGreatConstructor.prototype = new game.unit.shapes(klass, game.canvas, options.shapes || {});
 
 
 		me.extend(myGreatConstructor.prototype, game.unit.unitBase());

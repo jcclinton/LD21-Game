@@ -14,15 +14,12 @@ window.onload = function()
 
 		var shape
 			, i
-			, options = {data:{}, shapes:{}}
+			, options = { shapes:{} }
 			, u
 			, tl
 			;
 
-		options.data.isMe = true;
-
-		shape ='circle';
-		u = game.unit.factory.spawn(shape, options);
+		u = game.unit.factory.spawn('hero', options);
 		u.shape.x = game.board.width / 3;
 		u.shape.y = game.board.height / 2;
 

@@ -1,87 +1,28 @@
 game.unit.map = {
 
 
-	"circle": {
+	"hero": {
+		"klass": "circle",
+		"init": {
+			"isMe": true
+		},
+		"extending": [
+		]
+	},
+	"inmate": {
+		"klass": "circle",
+		"init": {
+			"isConvict": true
+		},
+		"extending": [
+		]
+	},
+	"guard": {
+		"klass": "circle",
 		"init": {
 		},
 		"extending": [
 		]
 	},
-	"ellipse": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-
-
-
-
-	"line": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-	"spiral": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-	"rectangle": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-	"polygon": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-	"catmulromspline": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-	"path": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-	"text": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-	"gradient": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-	"pattern": {
-		"init": {
-		},
-		"extending": [
-		]
-	},
-
-
-
-
-
-
-
-
-
-
-
-
 
 };

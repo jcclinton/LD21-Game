@@ -86,6 +86,10 @@ var gameboard = (function(){
 		rect.desc = "exit";
 		boardLayer.append(rect);
 		rect.stroke = '#00aa00';
+
+		rect.after(2000, function(){
+			game.jail.spawnGuard();
+		});
 		rect = null;
 		o = null;
 

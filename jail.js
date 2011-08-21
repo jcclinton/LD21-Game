@@ -1,6 +1,13 @@
 game.jail = (function(){
 	var me = {};
 
+	me.guardCount = 0;
+	me.guardLimit = 50;
+
+	// debug
+	me.spawnGuards = true;
+	me.spawnConvicts = true;
+
 	me.createLines = function(x, y){
 		me.line1 = new Line(25, game.board.height/2, x, y);
 		game.hero.scene.append(me.line1);
@@ -64,11 +71,13 @@ game.jail = (function(){
 			box.y = y - 33;
 	};
 
-	me.spawnConvict = function(){
+	me.spawnGuard = function(){
 		var u
-			, x = 0
-			, y = game.board.height / 2
-			, options = { data:{isMe: false, isConvict: true}, shapes:{x: x, y: y} }
+			, x
+			, y
+			, options
+			, nextx
+			, nexty
 			, endx
 			, endy
 			, startx
@@ -78,9 +87,93 @@ game.jail = (function(){
 			, result
 			, nodes = game.board.graph.nodes
 			, next
+			, d = 50
+			, t = 1500
 			;
 
-		u = game.unit.factory.spawn('circle', options);
+		if(me.spawnGuards !== true || me.guardCount >= me.guardLimit){
+			setTimeout(function(){
+				me.spawnGuard();
+			}, t);
+			return;
+		}
+
+		x = game.board.width - 10
+		y = game.board.height / 2
+		options = { shapes:{x: x, y: y} }
+
+		u = game.unit.factory.spawn('guard', options);
+		me.guardCount++;
+
+
+		nextx = game.board.width - (Math.random()*200 + 50)
+		nexty = Math.random() * game.board.height
+
+		if(nexty < d) nexty = d;
+		if(nexty > game.board.height - d) nexty = game.board.height - d;
+
+		endx = nextx / 10;
+		endy = nexty / 10;
+
+		startx = u.shape.x / 10;
+		starty = u.shape.y / 10;
+
+		endx = endx | 0;
+		endy = endy | 0;
+		startx = startx | 0;
+		starty = starty | 0;
+
+		try{
+			start = nodes[startx][starty];
+			end = nodes[endx][endy];
+			result = astar.search(nodes, start, end);
+			u.data.nextPath = result;
+			if(u.data.nextPath){
+				u.data.arrived = false;
+				next = u.data.nextPath.shift();
+				u.data.nextPos = {x: 10*next.x, y: 10*next.y};
+			}
+
+		}catch(e){
+			console.warn('ASTAR: ' + e);
+		}
+
+
+		u.scene.after(t, function(){
+			me.spawnGuard();
+		});
+
+	};
+
+	me.spawnConvict = function(){
+		var u
+			, x
+			, y
+			, options
+			, endx
+			, endy
+			, startx
+			, starty
+			, start
+			, end
+			, result
+			, nodes
+			, next
+			;
+
+		if(me.spawnConvicts !== true){
+			setTimeout(function(){
+				me.spawnConvict();
+			}, t);
+			return;
+		}
+
+		x = 0;
+		y = game.board.height / 2;
+
+		options = { shapes:{x: x, y: y} };
+
+		u = game.unit.factory.spawn('inmate', options);
 
 		endx = game.board.exit.x / 10  - 1;
 		endy = (game.board.exit.y - 50) / 10;
@@ -101,6 +194,8 @@ game.jail = (function(){
 		endy = endy | 0;
 		startx = startx | 0;
 		starty = starty | 0;
+
+		nodes = game.board.graph.nodes;
 
 		try{
 			start = nodes[startx][starty];
