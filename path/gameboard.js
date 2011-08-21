@@ -17,6 +17,8 @@ var gameboard = (function(){
 		obj.exit = {x: width, y: height/2};
 		obj.exitRange = 10;
 
+		obj.safex = 0.2 * obj.width;
+
 		return obj;
 	};
 
@@ -48,7 +50,9 @@ var gameboard = (function(){
 			{x1: 0, x2: obj.width, y1: 0, y2: 0},
 			{x1: obj.width, x2: obj.width, y1: 0, y2: obj.height},
 			{x1: 0, x2: obj.width, y1: obj.height, y2: obj.height},
-			{x1: 0, x2: 0, y1: 0, y2: obj.height}
+			{x1: 0, x2: 0, y1: 0, y2: obj.height},
+			{x1: obj.safex, x2: obj.safex, y1: 0, y2: obj.height},
+			{x1: obj.width - obj.safex, x2: obj.width - obj.safex, y1: 0, y2: obj.height}
 		];
 
 		// board outline

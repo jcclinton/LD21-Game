@@ -2,7 +2,7 @@ game.jail = (function(){
 	var me = {};
 
 	me.guardCount = 0;
-	me.guardLimit = 50;
+	me.guardLimit = 100;
 
 	// debug
 	me.spawnGuards = true;
@@ -92,12 +92,11 @@ game.jail = (function(){
 			, nodes = game.board.graph.nodes
 			, next
 			, d = 70
-			, t = 1500
+			, t = 300
 			, gradient
 			;
 
 		if(me.spawnGuards !== true || me.guardCount >= me.guardLimit){
-			console.log('out');
 			setTimeout(function(){
 				me.spawnGuard();
 			}, t);
@@ -128,6 +127,10 @@ game.jail = (function(){
 
 
 		nextx = Math.random() * game.board.width;
+		while(nextx < game.board.safex){
+			nextx = Math.random() * game.board.width;
+		}
+
 		nexty = Math.random() * game.board.height;
 
 		if(nextx < d) nextx = d;
@@ -155,6 +158,10 @@ game.jail = (function(){
 			if(u.data.nextPath && u.data.nextPath.length > 0){
 				next = u.data.nextPath.shift();
 				u.data.nextPos = {x: 10*next.x, y: 10*next.y};
+
+				setTimeout(function(){
+					u.destroy();
+				}, 5000);
 			}else{
 				console.warn('guard breakage');
 				u.destroy();
@@ -165,7 +172,14 @@ game.jail = (function(){
 		}
 
 		setTimeout(function(){
-			me.spawnGuard();
+				var count = Math.random() * 5
+					, i
+					;
+					count = 1;
+
+				for(i = 0; i < count; i++){
+					me.spawnGuard();
+				}
 		}, t);
 
 	};

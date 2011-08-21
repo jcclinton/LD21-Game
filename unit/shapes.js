@@ -114,7 +114,7 @@ game.unit.shapes = Klass({
 shapeControl: function(t){
 	var guards
 		, inmates
-		, heroDist = 100
+		, heroDist = 75
 		, guardDist = 50
 		, id
 		, x
@@ -152,7 +152,7 @@ shapeControl: function(t){
 	this.unit.moveUnit.call(this.unit);
 
 	if(this.unit.data.isMe){
-	var d = 1;
+	var d = this.unit.data.range;
 	 if ( this.root.keys.left )
 		 this.x -= d;
 	 if ( this.root.keys.right )
@@ -168,7 +168,7 @@ shapeControl: function(t){
 		}
 
 
-    this.scale = 1.5+Math.cos(this.offset*Math.PI*4 + t/400);
+    this.scale = 2.5+Math.cos(this.offset*Math.PI*4 + t/400);
 	}
 	this.fill = this.shapes.fill;
 	this.stroke = this.shapes.stroke;
