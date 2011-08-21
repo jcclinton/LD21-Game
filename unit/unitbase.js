@@ -52,8 +52,10 @@ game.unit.unitBase = function(){
 			this.y -= d;
 		}
 
-		this.line.x1 = this.x;
-		this.line.y1 = this.y;
+		if(this.line){
+			this.line.x1 = this.x;
+			this.line.y1 = this.y;
+		}
 	};
 
 	return me;

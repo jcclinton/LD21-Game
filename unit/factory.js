@@ -92,8 +92,6 @@ game.unit.factory = (function(){
 
 		obj.shape.unit = obj;
 
-		//obj.shape.addFrameListener( obj.unitControl );
-
 
 		defaults = {
 			isMe: false

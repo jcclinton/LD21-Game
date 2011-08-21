@@ -22,6 +22,7 @@ var gameboard = (function(){
 
 	me.draw = function(obj, canvas){
 		var boardLayer = new CanvasNode()
+			, jailLayer = new CanvasNode()
 			, line
 			, i
 			, w
@@ -71,25 +72,42 @@ var gameboard = (function(){
 
 					rect = new Rectangle(10, 10, o);
 					line.desc = "rect_"+i+'_'+j;
-					boardLayer.append(rect);
+					//boardLayer.append(rect);
 
 				}
 			}
 		}
+
+
+		// exit
+		w = 10
+		o = {x: width - w, y: height/2 - w/2};
+		rect = new Rectangle(w, 50, o);
+		line.desc = "jail";
+		boardLayer.append(rect);
+		rect.stroke = '#00aa00';
+
+
+		jailLayer.desc = "Jail Layer";
+		canvas.append(jailLayer);
+		jailLayer.stroke = '#883300';
 
 		// jail
 		w = 50
 		o = {x: 0, y: height/2 - w/2};
 		rect = new Rectangle(w, 50, o);
 		line.desc = "jail";
-		boardLayer.append(rect);
+		jailLayer.append(rect);
+		//rect.stroke = '#1188aa';
 
-		// exit
-		w = 50
-		o = {x: width - w, y: height/2 - w/2};
-		rect = new Rectangle(w, 50, o);
-		line.desc = "jail";
-		boardLayer.append(rect);
+		jailLayer.when('mousedown', function(){
+			console.log('here');
+			return false;
+		});
+
+		rect.after(1000, function(){
+			game.jail.spawnConvict();
+		});
 
 	};
 
