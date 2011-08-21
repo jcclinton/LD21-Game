@@ -97,6 +97,7 @@ game.jail = (function(){
 			;
 
 		if(me.spawnGuards !== true || me.guardCount >= me.guardLimit){
+			console.log('out');
 			setTimeout(function(){
 				me.spawnGuard();
 			}, t);
@@ -113,16 +114,21 @@ game.jail = (function(){
 	    ]
 	  };
 
-		x = game.board.width - 10
-		y = game.board.height / 2
-		options = { shapes:{x: x, y: y, gradient: gradient} }
+		x = game.board.width - 10;
+		//y = game.board.height / 2;
+		y = Math.random() * game.board.height;
+		if(y < d) y = d;
+		if(y > game.board.width - d) y = game.board.width - d;
+
+
+		options = { shapes:{x: x, y: y, gradient: gradient} };
 
 		u = game.unit.factory.spawn('guard', options);
 		me.guardCount++;
 
 
-		nextx = Math.random() * game.board.width
-		nexty = Math.random() * game.board.height
+		nextx = Math.random() * game.board.width;
+		nexty = Math.random() * game.board.height;
 
 		if(nextx < d) nextx = d;
 		if(nextx > game.board.width - d) nextx = game.board.width - d;
@@ -146,20 +152,21 @@ game.jail = (function(){
 			end = nodes[endx][endy];
 			result = astar.search(nodes, start, end);
 			u.data.nextPath = result;
-			if(u.data.nextPath){
-				u.data.arrived = false;
+			if(u.data.nextPath && u.data.nextPath.length > 0){
 				next = u.data.nextPath.shift();
 				u.data.nextPos = {x: 10*next.x, y: 10*next.y};
+			}else{
+				console.warn('guard breakage');
+				u.destroy();
 			}
 
 		}catch(e){
 			console.warn('ASTAR: ' + e);
 		}
 
-
-		u.scene.after(t, function(){
+		setTimeout(function(){
 			me.spawnGuard();
-		});
+		}, t);
 
 	};
 
@@ -177,6 +184,7 @@ game.jail = (function(){
 			, result
 			, nodes
 			, next
+			, t = 1500
 			;
 
 		if(me.spawnConvicts !== true){
@@ -220,20 +228,21 @@ game.jail = (function(){
 			end = nodes[endx][endy];
 			result = astar.search(nodes, start, end);
 			u.data.nextPath = result;
-			if(u.data.nextPath){
-				u.data.arrived = false;
+			if(u.data.nextPath && u.data.nextPath.length > 0){
 				next = u.data.nextPath.shift();
 				u.data.nextPos = {x: 10*next.x, y: 10*next.y};
+			}else{
+				console.warn('inmate breakage');
+				u.destroy();
 			}
 
 		}catch(e){
 			console.warn('ASTAR: ' + e);
 		}
 
-
-		u.scene.after(1500, function(){
+		setTimeout(function(){
 			me.spawnConvict();
-		});
+		}, t);
 	};
 
 

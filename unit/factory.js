@@ -105,10 +105,12 @@ game.unit.factory = (function(){
 			obj.data[key] =  initData[key];
 		}
 
+		obj.data.id = me.getNextId();
+
 		unitLayer.append(obj.scene);
 
 
-		me.unitList.add(obj.shape.id, obj);
+		me.unitList.add(obj.data.id, obj);
 
 		return obj;
 	};
@@ -116,26 +118,36 @@ game.unit.factory = (function(){
 
 	me.unitList = (function(){
 		var lst = {
-			"table": {}
+			"table": {},
+			"guards": {},
+			"inmates": {}
 		};
 
 		lst.add = function(id, obj) {
+			if(obj.data.isGuard){
+				lst.guards[id] = obj;
+			}else if(obj.data.isConvict){
+				lst.inmates[id] = obj;
+			}
 			return (lst.table[id] = obj);
 		};
 
 		lst.remove = function(id) {
+			var obj =lst.table[id];
+			if(!obj) return;
+
+			if(obj.data.isConvict){
+				delete lst.inmates[id];
+			}else if(obj.data.isGuard){
+				delete lst.guards[id];
+			}
+
 			return delete lst.table[id];
 		};
 
 		lst.get = function(id) {
 			return lst.table[id]?lst.table[id]:false;
 		};
-
-		lst.getAll = function() {
-			return lst.table;
-		};
-
-		lst.selected = null;
 
 		return lst;
 	}());

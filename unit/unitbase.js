@@ -3,6 +3,14 @@ game.unit.unitBase = function(){
 
 	me.data = {range: 3};
 
+	me.destroy = function(){
+		this.scene.removeSelf();
+		game.unit.factory.unitList.remove(this.data.id);
+		if(this.data.isGuard){
+			--game.jail.guardCount;
+		}
+	};
+
 	me.setWaypoints = function(wp){
 		var ar = []
 			, i
@@ -136,7 +144,7 @@ game.unit.unitBase = function(){
 		}
 
 		if(this.isAtExit()){
-			this.scene.removeSelf();
+			this.destroy();
 			game.score++;
 			document.getElementById('score').innerHTML = 'Score: '+game.score;
 		}

@@ -4,7 +4,8 @@ game.unit.map = {
 	"hero": {
 		"klass": "circle",
 		"init": {
-			"isMe": true
+			"isMe": true,
+			"selected": false
 		},
 		"extending": [
 		]
@@ -20,6 +21,7 @@ game.unit.map = {
 	"guard": {
 		"klass": "ellipse",
 		"init": {
+			"isGuard": true
 		},
 		"extending": [
 		]

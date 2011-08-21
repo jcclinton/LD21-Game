@@ -46,7 +46,6 @@ game.unit.shapes = Klass({
 
 
     this.shape = shape = this['get'+shapeType](params);
-		shape.id = game.unit.factory.getNextId();
 		shape.desc = shapeType + '_'+ shape.id;
 
 
@@ -56,13 +55,6 @@ game.unit.shapes = Klass({
 		this.scene.append(shape);
 
 
-
-		shape.when('focus', function(){
-			this.focused = true;
-		});
-		shape.when('blur', function(){
-			this.focused = false;
-		});
 
 		shape.addFrameListener( this.shapeControl );
 
@@ -90,18 +82,16 @@ game.unit.shapes = Klass({
 				, y
 				, line
 				;
-			x = shape.x;
-			y = shape.y;
 
-
-			id = e.canvasTarget.id;
-
-			unit = game.unit.factory.unitList.get(id);
+			unit = e.canvasTarget.unit;
 			if(!unit.data.isMe){
 				return false;
 			}
 
-			game.unit.factory.unitList.selected = unit;
+			x = shape.x;
+			y = shape.y;
+
+			unit.data.selected = true;
 
 			if(!shape.line){
 				shape.line = new Line(shape.x, shape.y, e.x, e.y);
@@ -122,9 +112,46 @@ game.unit.shapes = Klass({
   },
 
 shapeControl: function(t){
+	var guards
+		, inmates
+		, heroDist = 100
+		, guardDist = 50
+		, id
+		, x
+		, y
+		, gx
+		, gy
+		;
+
+	// first use hero to kill guards
+	if(this.unit.data.isMe){
+		guards = game.unit.factory.unitList.guards;
+		for(id in guards){
+			x = this.x;
+			y = this.y;
+			gx = guards[id].shape.x;
+			gy = guards[id].shape.y;
+			if(Math.abs(gx - x) < heroDist && Math.abs(gy - y) < heroDist){
+				guards[id].destroy();
+			}
+		}
+	}else if(this.unit.data.isGuard){
+		// then use guards to kill convicts
+		inmates = game.unit.factory.unitList.inmates;
+		for(id in inmates){
+			x = this.x;
+			y = this.y;
+			gx = inmates[id].shape.x;
+			gy = inmates[id].shape.y;
+			if(Math.abs(gx - x) < guardDist && Math.abs(gy - y) < guardDist){
+				inmates[id].destroy();
+			}
+		}
+	}
+
 	this.unit.moveUnit.call(this.unit);
 
-	if(this.focused && this.unit.data.isMe){
+	if(this.unit.data.isMe){
 	var d = 1;
 	 if ( this.root.keys.left )
 		 this.x -= d;

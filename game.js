@@ -40,11 +40,11 @@ var game = (function(){
 
 
 		canvas.when('mousemove', function(e){
-			var u = game.unit.factory.unitList.selected
+			var u = game.hero
 				, j = game.jail.selected
 				;
 
-			if(u){
+			if(u && u.data.selected){
 				u.shape.line.x1 = u.shape.x;
 				u.shape.line.y1 = u.shape.y;
 				u.shape.line.x2 = e.x;
@@ -59,7 +59,7 @@ var game = (function(){
 
 
 		canvas.when('mousedown', function(e){
-			game.unit.factory.unitList.selected = null;
+			game.hero.data.selected= null;
 		});
 
 		canvas.when('mouseup', function(e){
@@ -75,23 +75,23 @@ var game = (function(){
 				, i
 				;
 
-			if(game.unit.factory.unitList.selected){
+			if(game.hero && game.hero.data.selected){
 				try{
 					endx = x / 10 | 0;
 					endy = y / 10 | 0;
-					startx = game.unit.factory.unitList.selected.shape.x / 10 | 0;
-					starty = game.unit.factory.unitList.selected.shape.y / 10 | 0;
+					startx = game.hero.shape.x / 10 | 0;
+					starty = game.hero.shape.y / 10 | 0;
 
 					start = board.graph.nodes[startx][starty];
 					end = board.graph.nodes[endx][endy];
 					result = astar.search(board.graph.nodes, start, end);
-					game.unit.factory.unitList.selected.data.nextPath = result;
+					game.hero.data.nextPath = result;
 				}catch(e){
-					game.unit.factory.unitList.selected.shape.line.stroke = false;
+					game.hero.shape.line.stroke = false;
 					console.warn('ASTAR: ' + e);
 				}
 
-				game.unit.factory.unitList.selected = null;
+				game.hero.data.selected = null;
 			}
 
 			if(game.jail.selected){
