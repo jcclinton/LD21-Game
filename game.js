@@ -41,6 +41,7 @@ var game = (function(){
 
 		canvas.when('mousemove', function(e){
 			var u = game.unit.factory.unitList.selected
+				, j = game.jail.selected
 				;
 
 			if(u){
@@ -48,6 +49,11 @@ var game = (function(){
 				u.shape.line.y1 = u.shape.y;
 				u.shape.line.x2 = e.x;
 				u.shape.line.y2 = e.y;
+			}
+
+			if(j){
+				game.jail['line'+j].x2 = e.x;
+				game.jail['line'+j].y2 = e.y;
 			}
 		});
 
@@ -85,6 +91,16 @@ var game = (function(){
 				}
 
 				game.unit.factory.unitList.selected = null;
+			}
+
+			if(game.jail.selected){
+				if(!game.jail.box1 || !game.jail.box2){
+					game.jail.createBoxes(e.x, e.y);
+				}
+				if(game.jail.selected <= 2){
+					game.jail.moveBox(game.jail.selected, e.x, e.y);
+				}
+				game.jail.selected = null;
 			}
 		});
   };

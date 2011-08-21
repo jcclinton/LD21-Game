@@ -83,7 +83,7 @@ var gameboard = (function(){
 		w = 10
 		o = {x: width - w, y: height/2 - 50};
 		rect = new Rectangle(w, 50, o);
-		rect.desc = "jail";
+		rect.desc = "exit";
 		boardLayer.append(rect);
 		rect.stroke = '#00aa00';
 		rect = null;
@@ -102,8 +102,17 @@ var gameboard = (function(){
 		jailLayer.append(rect);
 		//rect.stroke = '#1188aa';
 
-		jailLayer.when('mousedown', function(){
-			console.log('here');
+		jailLayer.when('mousedown', function(e){
+			if(!game.jail.line1){
+				game.jail.createLines(e.x, e.y);
+			}
+
+			if(!game.jail.box1 || !game.jail.box2){
+				game.jail.createBoxes(e.x, e.y);
+			}
+			game.jail.moveBox(1, -100, -100);
+			game.jail.moveBox(2, -100, -100);
+			game.jail.selected = 1;
 			return false;
 		});
 

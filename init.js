@@ -19,14 +19,13 @@ window.onload = function()
 			, tl
 			;
 
-			options.data.isMe = true;
+		options.data.isMe = true;
 
-		for(i = 0; i < 1; i++){
-			shape = i % 2 ? 'ellipse' : 'circle';
-			u = game.unit.factory.spawn(shape,options);
-			u.shape.x = game.board.width / 3;
-			u.shape.y = game.board.height / 2;
-		}
+		shape ='circle';
+		u = game.unit.factory.spawn(shape, options);
+		u.shape.x = game.board.width / 3;
+		u.shape.y = game.board.height / 2;
+
 	},0);
 
 

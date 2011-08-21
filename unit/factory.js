@@ -113,6 +113,10 @@ game.unit.factory = (function(){
 
 		me.unitList.add(obj.shape.id, obj);
 
+		if(options.data.isMe){
+			game.hero = obj;
+		}
+
 		return obj;
 	};
 
