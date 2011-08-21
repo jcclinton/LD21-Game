@@ -81,11 +81,13 @@ var gameboard = (function(){
 
 		// exit
 		w = 10
-		o = {x: width - w, y: height/2 - w/2};
+		o = {x: width - w, y: height/2 - 50};
 		rect = new Rectangle(w, 50, o);
-		line.desc = "jail";
+		rect.desc = "jail";
 		boardLayer.append(rect);
 		rect.stroke = '#00aa00';
+		rect = null;
+		o = null;
 
 
 		jailLayer.desc = "Jail Layer";
@@ -94,9 +96,9 @@ var gameboard = (function(){
 
 		// jail
 		w = 50
-		o = {x: 0, y: height/2 - w/2};
+		o = {x: 0, y: height/2 - w};
 		rect = new Rectangle(w, 50, o);
-		line.desc = "jail";
+		rect.desc = "jail";
 		jailLayer.append(rect);
 		//rect.stroke = '#1188aa';
 
@@ -105,7 +107,7 @@ var gameboard = (function(){
 			return false;
 		});
 
-		rect.after(1000, function(){
+		rect.after(2000, function(){
 			game.jail.spawnConvict();
 		});
 

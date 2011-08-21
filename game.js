@@ -8,6 +8,10 @@ var game = (function(){
 	me.init = function(){
 		var canvas
 			, board
+			, t
+			, textLayer = new CanvasNode()
+			, elem
+			, score
 			;
 
 		board = this.board = gameboard.create();
@@ -19,6 +23,20 @@ var game = (function(){
 		gameboard.draw(board, canvas);
 
   	canvas.fill = 'rgba(0,0,0, 0.1)';
+
+
+
+		game.score = 0;
+
+    elem = E('h1', { id: 'score' });
+    elem.appendChild(T('Score: ' + this.score));
+    score = new ElementNode(elem, {
+      color: 'gray', x: 100, y: 500, zIndex: 1002, align: 'center', cursor: 'default'
+    });
+
+		textLayer.desc = "text layer";
+		canvas.append(textLayer);
+		textLayer.append(score);
 
 
 		canvas.when('mousemove', function(e){
