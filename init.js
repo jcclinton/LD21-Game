@@ -8,30 +8,26 @@ window.onload = function()
 
 	document.body.removeChild( document.getElementById('oldBrowser') );
 
-	game.init();
+	setTimeout(function(){
+		game.init();
 
 
-	var shape
-		, i
-		, options = {data:{}, shapes:{}}
-		, u
-		, tl
-		;
+		var shape
+			, i
+			, options = {data:{}, shapes:{}}
+			, u
+			, tl
+			;
 
-		options.data.isMe = true;
+			options.data.isMe = true;
 
-	for(i = 0; i < 5; i++){
-		shape = i % 2 ? 'ellipse' : 'circle';
-		u = game.unit.factory.spawn(shape,options);
-		u.shape.x += i*100;
-	}
-
-	//u.moveTo(400, 400);
-
-	/*tl = new Timeline(false);
-	tl.addKeyframe(10, u.shape);
-
-	u.shape.addTimeline(tl);*/
+		for(i = 0; i < 1; i++){
+			shape = i % 2 ? 'ellipse' : 'circle';
+			u = game.unit.factory.spawn(shape,options);
+			u.shape.x = game.board.width / 3;
+			u.shape.y = game.board.height / 2;
+		}
+	},0);
 
 
 };

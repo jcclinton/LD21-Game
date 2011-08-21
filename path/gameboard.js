@@ -14,6 +14,9 @@ var gameboard = (function(){
 		obj.boardArray = createBoard();
 		obj.graph = new Graph(obj.boardArray);
 
+		obj.exit = {x: width, y: height/2};
+		obj.exitRange = 10;
+
 		return obj;
 	};
 
@@ -33,7 +36,6 @@ var gameboard = (function(){
 			, outline
 			, o
 			, rect
-			, width
 			;
 
 		boardLayer.desc = "Board Layer";
@@ -48,6 +50,7 @@ var gameboard = (function(){
 			{x1: 0, x2: 0, y1: 0, y2: obj.height}
 		];
 
+		// board outline
 		for(i = 0; i < outline.length; i++){
 			o = outline[i];
 			line = new Line(o.x1, o.y1, o.x2, o.y2);
@@ -55,25 +58,39 @@ var gameboard = (function(){
 			boardLayer.append(line);
 		}
 
-		//return;
-
-
+		//inner blocking rectangles
 		for(i = 0, w = obj.boardArray.length; i < w; i++){
 			for(j = 0, h = obj.boardArray[i].length; j < h; j++){
 				if(obj.boardArray[i][j]){
 					im = 10*i;
 					jm = 10*j;
 
+					// coordinates start at top left corner of rect
+					// todo: fix this to work with the coords
 					o = {x: im + 5, y: jm - 5};
-					width = 10;
 
-					rect = new Rectangle(width, height, o);
+					rect = new Rectangle(10, 10, o);
 					line.desc = "rect_"+i+'_'+j;
 					boardLayer.append(rect);
 
 				}
 			}
 		}
+
+		// jail
+		w = 50
+		o = {x: 0, y: height/2 - w/2};
+		rect = new Rectangle(w, 50, o);
+		line.desc = "jail";
+		boardLayer.append(rect);
+
+		// exit
+		w = 50
+		o = {x: width - w, y: height/2 - w/2};
+		rect = new Rectangle(w, 50, o);
+		line.desc = "jail";
+		boardLayer.append(rect);
+
 	};
 
 
@@ -81,19 +98,24 @@ var gameboard = (function(){
 	function createBoard(){
 		var i
 			, j
-			, w = width/unit
-			, h = height/unit
+			, w = width/unit // 100
+			, h = height/unit // 60
 			, inner
 			, outer = []
 			, v
+			, llimit = 40
+			, rlimit = w - llimit
+			, tlimit = 1
+			, blimit = h - tlimit
 			;
 
 		for(i = 0; i < w; i++){
 			inner = [];
 			for(j = 0; j < h; j++){
 				v = 0;
-				if(i === 50 && j > 1){
-					v = 1;
+				if(j > tlimit && j < blimit && i > llimit && i < rlimit){
+					v = Math.random();
+					v = v > 0.2 ? 0 : 1;
 				}
 				inner.push(v); // row
 			}

@@ -1,11 +1,12 @@
 game.unit.unitBase = function(){
 	var me = {};
 
-	me.data = {}
+	me.data = {range: 3}
 
 	me.checkPath = function(){
 		var path = this.unit.data.nextPath
 			, pos = this.unit.data.nextPos
+			, d = this.unit.data.range
 			, next
 			;
 
@@ -14,7 +15,7 @@ game.unit.unitBase = function(){
 			}
 
 			if(pos){
-				if(pos.x !== this.x || pos.y !== this.y){
+				if( Math.abs(pos.x - this.x) > d || Math.abs(pos.y - this.y) > d ){
 					return;
 				}
 			}
@@ -28,26 +29,27 @@ game.unit.unitBase = function(){
 
 	me.moveUnit = function(){
 		var u = this.unit.data.nextPos
+			, d = this.unit.data.range
 			;
 
 		if( !u ){
 			return;
 		}
 
-		if(u.x === this.x && u.y === this.y){
+		if( Math.abs(this.x - u.x) < d && Math.abs(this.y - u.y) < d ){
 			return;
 		}
 
 		if(u.x > this.x){
-			this.x += 1;
+			this.x += d;
 		}else{
-			this.x -= 1;
+			this.x -= d;
 		}
 
 		if(u.y > this.y){
-			this.y += 1;
+			this.y += d;
 		}else{
-			this.y -= 1;
+			this.y -= d;
 		}
 
 		this.line.x1 = this.x;
