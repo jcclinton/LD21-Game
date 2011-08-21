@@ -81,6 +81,8 @@ game.unit.shapes = Klass({
 				, x
 				, y
 				, line
+				, ex = e.offsetX || e.layerX || e.x
+				, ey = e.offsetY || e.layerY || e.y
 				;
 
 			unit = e.canvasTarget.unit;
@@ -94,7 +96,7 @@ game.unit.shapes = Klass({
 			unit.data.selected = true;
 
 			if(!shape.line){
-				shape.line = new Line(shape.x, shape.y, e.x, e.y);
+				shape.line = new Line(shape.x, shape.y, ex, ey);
 				this.append(shape.line);
 			}
 			shape.line.stroke = true;
@@ -201,8 +203,8 @@ shapeControl: function(t){
 			offset: 4 * Math.PI,
 			radius: 15,
 			x: 0,
-			y: 100,
-		};
+			y: 100
+		}
 
 		for(key in defaults){
 			options[key] = params[key] ? params[key] : defaults[key];
@@ -231,8 +233,8 @@ shapeControl: function(t){
 			radiusx: 15,
 			radiusy: 5,
 			x: 0,
-			y: 100,
-		};
+			y: 100
+		}
 
 		for(key in defaults){
 			options[key] = params[key] ? params[key] : defaults[key];

@@ -54,8 +54,8 @@ game.jail = (function(){
 			me['box'+i].when('mousedown', function(e){
 				var j = i + 1
 					, l = me['line'+j]
-					, x1 = e.offsetX
-					, y1 = e.offsetY
+					, x1 = e.offsetX || e.layerX || e.x
+					, y1 = e.offsetY || e.layerY || e.y
 					;
 
 				if(i >= 1){
@@ -64,9 +64,9 @@ game.jail = (function(){
 				}
 
 				l.x1 = x1;
-				l.x2 = e.offsetX;
+				l.x2 = x1;
 				l.y1 = y1;
-				l.y2 = e.offsetY;
+				l.y2 = y1;
 				game.jail.selected = j;
 
 				return false;

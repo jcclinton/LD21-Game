@@ -28,6 +28,6 @@ game.unit.map = {
 		},
 		"extending": [
 		]
-	},
+	}
 
 };

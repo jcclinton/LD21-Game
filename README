@@ -2,5 +2,31 @@ Ludum Dare 48 hour project.
 
 This is my game for Ludum Dare 21
 
-The game uses the open source Cake library: https://github.com/MichaelCereda/CakeJs
+The game uses the open-source Cake library: https://github.com/MichaelCereda/CakeJs
 
+It uses an open-source A* library: https://github.com/bgrins/javascript-astar
+
+Instructions:You are the legendary hero Spartacus and your soldiers have been captured by the evil roman legions!
+
+You must help them escape the jail and get them to exit
+
+But the Roman Guards are going to try stop you. They’ll kill your soldiers if you don’t get them first!
+
+To win the game you must move 10 soldiers to the exit.
+
+To move Spartacus, you can drag to a spot with the mouse. You can also use the arrow keys to move him (but you must click him first)
+
+To help your soldiers, you must set waypoints from the jail. To set a waypoint, drag the jail to where you want your soldiers to go. You may place 3 waypoints.
+
+notes:
+-guards will never spawn to the left of the first safety zone (ie the brown line)
+-there can only be so many guards that are active at once, once their ranks are full, they stop spawning
+-guards are inherently lazy, and they will lose interest after a while. Once this happens they will leave and new guards will come in to take their place.
+
+Browser Support:
+Chrome: works fine (version 14)
+safari: works fine
+Firefox: everything works but white lines dont show when you drag stuff (version 7)
+IE9- works, but score text is halfway off the page (but you can still see the score)
+IE8- No Support
+Opera - works but you cant drag Spartacus (you can click him and use arrows to control him though) (version 11)

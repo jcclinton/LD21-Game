@@ -63,8 +63,8 @@ var game = (function(){
 		});
 
 		canvas.when('mouseup', function(e){
-			var x = e.offsetX
-				, y = e.offsetY
+			var x = e.offsetX || e.layerX || e.x
+				, y = e.offsetY || e.layerY || e.y
 				, startx
 				, starty
 				, endx
