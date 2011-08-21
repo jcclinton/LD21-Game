@@ -126,7 +126,7 @@ game.unit.factory = (function(){
 		lst.add = function(id, obj) {
 			if(obj.data.isGuard){
 				lst.guards[id] = obj;
-			}else if(obj.data.isConvict){
+			}else if(obj.data.isInmate){
 				lst.inmates[id] = obj;
 			}
 			return (lst.table[id] = obj);
@@ -136,7 +136,7 @@ game.unit.factory = (function(){
 			var obj =lst.table[id];
 			if(!obj) return;
 
-			if(obj.data.isConvict){
+			if(obj.data.isInmate){
 				delete lst.inmates[id];
 			}else if(obj.data.isGuard){
 				delete lst.guards[id];

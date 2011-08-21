@@ -130,7 +130,7 @@ var gameboard = (function(){
 		});
 
 		rect.after(2000, function(){
-			game.jail.spawnConvict();
+			game.jail.spawnInmate();
 		});
 
 	};

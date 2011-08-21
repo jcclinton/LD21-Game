@@ -6,7 +6,7 @@ game.jail = (function(){
 
 	// debug
 	me.spawnGuards = true;
-	me.spawnConvicts = true;
+	me.spawnInmates = true;
 
 	me.createLines = function(x, y){
 		if(!game.hero){
@@ -170,7 +170,7 @@ game.jail = (function(){
 
 	};
 
-	me.spawnConvict = function(){
+	me.spawnInmate = function(){
 		var u
 			, x
 			, y
@@ -187,9 +187,9 @@ game.jail = (function(){
 			, t = 1500
 			;
 
-		if(me.spawnConvicts !== true){
+		if(me.spawnInmates !== true){
 			setTimeout(function(){
-				me.spawnConvict();
+				me.spawnInmate();
 			}, t);
 			return;
 		}
@@ -241,7 +241,7 @@ game.jail = (function(){
 		}
 
 		setTimeout(function(){
-			me.spawnConvict();
+			me.spawnInmate();
 		}, t);
 	};
 

@@ -13,7 +13,7 @@ game.unit.map = {
 	"inmate": {
 		"klass": "circle",
 		"init": {
-			"isConvict": true
+			"isInmate": true
 		},
 		"extending": [
 		]

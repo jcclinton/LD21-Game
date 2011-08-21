@@ -103,8 +103,8 @@ game.unit.unitBase = function(){
 		}
 
 
-		// only convicts have waypoints, everyone else can just leave
-		if(!u.data.isConvict){
+		// only inmates have waypoints, everyone else can just leave
+		if(!u.data.isInmate){
 			return false;
 		}
 

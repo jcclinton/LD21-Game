@@ -136,7 +136,7 @@ shapeControl: function(t){
 			}
 		}
 	}else if(this.unit.data.isGuard){
-		// then use guards to kill convicts
+		// then use guards to kill inmates
 		inmates = game.unit.factory.unitList.inmates;
 		for(id in inmates){
 			x = this.x;
