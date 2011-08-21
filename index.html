@@ -1,27 +1,116 @@
 <html>
-	<head>
-		<script type="text/javascript" src="cake.js"></script>
+<head>
+<title>Escape!</title>
+<style>
+p,ol,li, h1, span, h2, h3{
+	color: #ccc;
+};
 
-		<script type='text/javascript' src='path/graph.js'></script>
-		<script type='text/javascript' src='path/astar.js'></script>
 
-		<script type='text/javascript' src='path/gameboard.js'></script>
 
-		<script type="text/javascript" src="game.js"></script>
-		<script type="text/javascript" src="init.js"></script>
-		<script type="text/javascript" src="unit/factory.js"></script>
-
-		<script type="text/javascript" src="unit/unitbase.js"></script>
-		<script type="text/javascript" src="unit/shapes.js"></script>
-
-		<script type="text/javascript" src="unit/unitmap.js"></script>
-		
-		<script type="text/javascript" src="jail.js"></script>
-		<title>Escape!</title>
-	</head>
-	<body style="margin: 10px; background-color: #111;">
-		<p id="oldBrowser">
-			Oh hai! I see you have an old browser, theres nothing here for you then :( <br/> You will need to upgrade your browser to play this game.
-		</p>
-	</body>
+</style>
+</head>
+<body style="background-color: black;">
+<h1>ESCAPE!</h1>
+<a href="game.html">Click to Play!</a>
+<p>
+<strong>You are the legendary hero Spartacus and your soldiers have been captured by the evil roman legions!</strong>
+</p>
+<div>
+	<div style="float:left">
+		<img src="images/spartacus.png" title="Our Hero!"/>
+	</div>
+	<div style="float:left; margin-top:30px;"><span>Spartacus</span></div>
+	<div style="clear:both"></div>
+</div>
+<div>
+	<div style="float:left">
+		<img src="images/inmate.png" title="A poor inmate"/>
+	</div>
+	<div style="float:left; margin-top:30px;"><span>Soldier</span></div>
+	<div style="clear:both"></div>
+</div>
+<p>
+You must help them escape the jail and get them to exit
+</p>
+<div>
+	<div style="float:left">
+		<img src="images/jail.png" title="Captivity..."/>
+	</div>
+	<div style="float:left; margin-top:30px;"><span>Jail</span></div>
+	<div style="clear:both"></div>
+</div>
+<div>
+	<div style="float:left">
+		<img src="images/exit.png" title="Freedom!"/>
+	</div>
+	<div style="float:left; margin-top:30px;"><span>Freedom</span></div>
+	<div style="clear:both"></div>
+</div>
+<p>
+But the Roman Guards are going to try stop you. They will kill your soldiers if you don't get them first!
+</p>
+<div>
+	<div style="float:left">
+		<img src="images/guard.png" title="Evil!"/>
+	</div>
+	<div style="float:left; margin-top:8px;"><span>Guard</span></div>
+	<div style="clear:both"></div>
+</div>
+<p>
+<h3>To win the game you must move 10 soldiers to the exit.</h3>
+</p>
+<br/>
+<h2>Instructions:</h2>
+<p>
+To move Spartacus, you can drag to a spot with the mouse. You can also use the arrow keys to move him (but you must click him first)
+</p>
+<p>
+To help your soldiers, you must set waypoints from the jail. To set a waypoint, drag the jail to where you want your soldiers to go. You may place 3 waypoints.
+</p>
+<div>
+	<div style="float:left">
+		<img src="images/waypoint.png" title="The path to freedom"/>
+	</div>
+	<div style="float:left; margin-top:30px;"><span>Waypoint</span></div>
+	<div style="clear:both"></div>
+</div>
+<p>
+<strong>Notes:</strong>
+<ul>
+<li>
+guards will never spawn to the left of the first safety zone (ie the brown line)
+</li>
+<li>
+there can only be so many guards that are active at once, once their ranks are full, they stop spawning
+</li>
+<li>
+guards are inherently lazy, and they will lose interest after a while. Once this happens they will leave and new guards will come in to take their place.
+</li>
+</ul>
+</p>
+<p>
+<strong>Browser Support:</strong>
+<ul>
+<li>
+Chrome: works fine (version 14)
+</li>
+<li>
+safari: works fine
+</li>
+<li>
+Firefox: everything works but white lines dont show when you drag stuff (version 7)
+</li>
+<li>
+IE9- works, but score text is halfway off the page (but you can still see the score)
+</li>
+<li>
+IE8- No Support
+</li>
+<li>
+Opera - works but you cant drag Spartacus (you can click him and use arrows to control him though) (version 11)
+</li>
+</ul>
+</p>
+</body>
 </html>
