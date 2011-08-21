@@ -18,7 +18,7 @@ game.unit.map = {
 		]
 	},
 	"guard": {
-		"klass": "circle",
+		"klass": "ellipse",
 		"init": {
 		},
 		"extending": [

@@ -23,6 +23,8 @@ window.onload = function()
 		u.shape.x = game.board.width / 3;
 		u.shape.y = game.board.height / 2;
 
+		game.hero = u;
+
 	},0);
 
 

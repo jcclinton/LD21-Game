@@ -9,6 +9,10 @@ game.jail = (function(){
 	me.spawnConvicts = true;
 
 	me.createLines = function(x, y){
+		if(!game.hero){
+			return;
+		}
+
 		me.line1 = new Line(25, game.board.height/2, x, y);
 		game.hero.scene.append(me.line1);
 		me.line1.stroke = true;
@@ -87,8 +91,9 @@ game.jail = (function(){
 			, result
 			, nodes = game.board.graph.nodes
 			, next
-			, d = 50
+			, d = 70
 			, t = 1500
+			, gradient
 			;
 
 		if(me.spawnGuards !== true || me.guardCount >= me.guardLimit){
@@ -98,16 +103,29 @@ game.jail = (function(){
 			return;
 		}
 
+		gradient = {
+	    type : 'radial',
+	    endRadius : 15,
+	    colorStops : [
+	      [ 0.0, "rgba(100,195,90,1)" ],
+	      [ 0.2, "rgba(80,10,5,0.4)" ],
+	      [ 1, "rgba(10,0,40,0)" ]
+	    ]
+	  };
+
 		x = game.board.width - 10
 		y = game.board.height / 2
-		options = { shapes:{x: x, y: y} }
+		options = { shapes:{x: x, y: y, gradient: gradient} }
 
 		u = game.unit.factory.spawn('guard', options);
 		me.guardCount++;
 
 
-		nextx = game.board.width - (Math.random()*200 + 50)
+		nextx = Math.random() * game.board.width
 		nexty = Math.random() * game.board.height
+
+		if(nextx < d) nextx = d;
+		if(nextx > game.board.width - d) nextx = game.board.width - d;
 
 		if(nexty < d) nexty = d;
 		if(nexty > game.board.height - d) nexty = game.board.height - d;
