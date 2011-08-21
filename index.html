@@ -14,7 +14,7 @@ p,ol,li, h1, span, h2, h3{
 <h1>ESCAPE!</h1>
 <a href="game.html">Click to Play!</a>
 <p>
-<strong>You are the legendary hero Spartacus and your soldiers have been captured by the evil roman legions!</strong>
+<strong>You are the legendary hero Spartacus and your soldiers have been captured by the evil romans!</strong>
 </p>
 <div>
 	<div style="float:left">
@@ -63,11 +63,22 @@ But the Roman Guards are going to try stop you. They will kill your soldiers if 
 <br/>
 <h2>Instructions:</h2>
 <p>
-To move Spartacus, you can drag to a spot with the mouse. You can also use the arrow keys to move him (but you must click him first)
+Drag Spartacus with the mouse to move him. You can also use the arrow keys to move him (but you must click him first).
 </p>
 <p>
 To help your soldiers, you must set waypoints from the jail. To set a waypoint, drag the jail to where you want your soldiers to go. You may place 3 waypoints.
 </p>
+<ul>
+<li>
+If Spartacus comes near a Roman guard, he will kill him
+</li>
+<li>
+If a Roman guard comes near one of your soldiers, he will kill the soldier
+</li>
+<li>
+If a soldier reaches the exit, he escapes and you get a point
+</li>
+</ul>
 <div>
 	<div style="float:left">
 		<img src="images/waypoint.png" title="The path to freedom"/>
@@ -75,17 +86,23 @@ To help your soldiers, you must set waypoints from the jail. To set a waypoint, 
 	<div style="float:left; margin-top:30px;"><span>Waypoint</span></div>
 	<div style="clear:both"></div>
 </div>
-<p>
+<p style="margin-top:40px;">
 <strong>Notes:</strong>
 <ul>
 <li>
-guards will never spawn to the left of the first safety zone (ie the brown line)
+The outline of the game is a brown line, and it also bisects the gameboard in two places.
+</li>
+<li>
+Units cannot move outside the brown outline, that is out-of-bounds.
+</li>
+<li>
+guards will never spawn to the left of the first safety zone (ie the left brown line)
 </li>
 <li>
 there can only be so many guards that are active at once, once their ranks are full, they stop spawning
 </li>
 <li>
-guards are inherently lazy, and they will lose interest after a while. Once this happens they will leave and new guards will come in to take their place.
+guards are inherently lazy, and they will lose interest after a while. Once this happens they will leave and new guards will come to take their place.
 </li>
 </ul>
 </p>
@@ -102,13 +119,13 @@ safari: works fine
 Firefox: everything works but white lines dont show when you drag stuff (version 7)
 </li>
 <li>
-IE9- works, but score text is halfway off the page (but you can still see the score)
+IE9- works, but score text is halfway off the page
 </li>
 <li>
 IE8- No Support
 </li>
 <li>
-Opera - works but you cant drag Spartacus (you can click him and use arrows to control him though) (version 11)
+Opera - works but you cant drag Spartacus (you can use arrows to control him though) (version 11)
 </li>
 </ul>
 </p>
