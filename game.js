@@ -63,8 +63,8 @@ var game = (function(){
 		});
 
 		canvas.when('mouseup', function(e){
-			var x = e.x
-				, y = e.y
+			var x = e.offsetX
+				, y = e.offsetY
 				, startx
 				, starty
 				, endx
@@ -96,11 +96,11 @@ var game = (function(){
 
 			if(game.jail.selected){
 				if(!game.jail.box1 || !game.jail.box2){
-					game.jail.createBoxes(e.x, e.y);
+					game.jail.createBoxes(x, y);
 				}
 				if(game.jail.selected <= 3){
 					if(game.jail.selected <= 2){
-						game.jail.moveBox(game.jail.selected, e.x, e.y);
+						game.jail.moveBox(game.jail.selected, x, y);
 
 						i = game.jail.selected;
 						while(++i <=3){
@@ -109,7 +109,7 @@ var game = (function(){
 							}
 						}
 					}
-					game.jail.waypoints[game.jail.selected] = {x: e.x, y: e.y};
+					game.jail.waypoints[game.jail.selected] = {x: x, y: y};
 				}
 				if(game.jail.selected === 2){
 					game.jail.line3.x1 = -100;

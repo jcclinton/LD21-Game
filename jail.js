@@ -53,13 +53,20 @@ game.jail = (function(){
 		function bindBox(i){
 			me['box'+i].when('mousedown', function(e){
 				var j = i + 1
-					, l = me['line'+j];
+					, l = me['line'+j]
+					, x1 = e.offsetX
+					, y1 = e.offsetY
 					;
 
-				l.x1 = e.x;
-				l.x2 = e.x;
-				l.y1 = e.y;
-				l.y2 = e.y;
+				if(i >= 1){
+					x1 = me['line'+i].x2;
+					y1 = me['line'+i].y2;
+				}
+
+				l.x1 = x1;
+				l.x2 = e.offsetX;
+				l.y1 = y1;
+				l.y2 = e.offsetY;
 				game.jail.selected = j;
 
 				return false;
@@ -71,8 +78,8 @@ game.jail = (function(){
 		var box = this['box'+num]
 			;
 
-			box.x = x - 18;
-			box.y = y - 33;
+			box.x = x;
+			box.y = y;
 	};
 
 	me.spawnGuard = function(){
@@ -161,7 +168,7 @@ game.jail = (function(){
 
 				setTimeout(function(){
 					u.destroy();
-				}, 5000);
+				}, u.data.dieTime);
 			}else{
 				console.warn('guard breakage');
 				u.destroy();
@@ -172,17 +179,29 @@ game.jail = (function(){
 		}
 
 		setTimeout(function(){
-				var count = Math.random() * 5
-					, i
-					;
-					count = 1;
-
-				for(i = 0; i < count; i++){
-					me.spawnGuard();
-				}
-		}, t);
-
+			me.spawnGuard();
+		});
 	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	me.spawnInmate = function(){
 		var u
