@@ -13,6 +13,8 @@ game.jail = (function(){
 		me.line3 = new Line(-100, -100, -100, -100);
 		game.hero.scene.append(me.line3);
 		me.line3.stroke = true;
+
+		me.waypoints = [];
 	};
 
 	me.createBoxes = function(x, y){
@@ -42,7 +44,6 @@ game.jail = (function(){
 				var j = i + 1
 					, l = me['line'+j];
 					;
-					console.log(i);
 
 				l.x1 = e.x;
 				l.x2 = e.x;
@@ -76,21 +77,42 @@ game.jail = (function(){
 			, end
 			, result
 			, nodes = game.board.graph.nodes
+			, next
 			;
 
 		u = game.unit.factory.spawn('circle', options);
 
+		endx = game.board.exit.x / 10  - 1;
+		endy = (game.board.exit.y - 50) / 10;
+
+		if(me.waypoints){
+			u.setWaypoints(me.waypoints);
+			coords = u.popWaypoint();
+			if(coords){
+				endx = coords.x / 10;
+				endy = coords.y / 10;
+			}
+		}
+
+		startx = x / 10;
+		starty = y / 10;
+
+		endx = endx | 0;
+		endy = endy | 0;
+		startx = startx | 0;
+		starty = starty | 0;
 
 		try{
-			endx = game.board.exit.x / 10  - 1 | 0;
-			endy = (game.board.exit.y - 50) / 10 | 0;
-			startx = x / 10 | 0;
-			starty = y / 10 | 0;
-
 			start = nodes[startx][starty];
 			end = nodes[endx][endy];
 			result = astar.search(nodes, start, end);
 			u.data.nextPath = result;
+			if(u.data.nextPath){
+				u.data.arrived = false;
+				next = u.data.nextPath.shift();
+				u.data.nextPos = {x: 10*next.x, y: 10*next.y};
+			}
+
 		}catch(e){
 			console.warn('ASTAR: ' + e);
 		}

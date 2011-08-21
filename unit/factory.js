@@ -51,10 +51,8 @@ game.unit.factory = (function(){
 			, obj
 			, map
 			, myGreatConstructor = function(){}
-			, model
 			, layer
 			, initData = {}
-			, tempObj = {}
 			, i
 			, l
 			, id
@@ -96,16 +94,13 @@ game.unit.factory = (function(){
 		defaults = {
 			isMe: false
 		};
+		map.init = map.init || {};
+		options.data = options.data || {};
 
-		initData = me.extend({}, defaults, map.init || {});
+		me.extend(initData, defaults, map.init, options.data);
 
-		for(key in defaults){
+		for(key in initData){
 			obj.data[key] =  initData[key];
-		}
-		if(options.data !== void 0){
-			for(key in options.data){
-				obj.data[key] =  options.data[key];
-			}
 		}
 
 		unitLayer.append(obj.scene);

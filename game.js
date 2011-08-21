@@ -72,6 +72,7 @@ var game = (function(){
 				, start
 				, end
 				, result
+				, i
 				;
 
 			if(game.unit.factory.unitList.selected){
@@ -97,8 +98,24 @@ var game = (function(){
 				if(!game.jail.box1 || !game.jail.box2){
 					game.jail.createBoxes(e.x, e.y);
 				}
-				if(game.jail.selected <= 2){
-					game.jail.moveBox(game.jail.selected, e.x, e.y);
+				if(game.jail.selected <= 3){
+					if(game.jail.selected <= 2){
+						game.jail.moveBox(game.jail.selected, e.x, e.y);
+
+						i = game.jail.selected;
+						while(++i <=3){
+							if(game.jail.waypoints[i]){
+								delete game.jail.waypoints[i];
+							}
+						}
+					}
+					game.jail.waypoints[game.jail.selected] = {x: e.x, y: e.y};
+				}
+				if(game.jail.selected === 2){
+					game.jail.line3.x1 = -100;
+					game.jail.line3.x2 = -100;
+					game.jail.line3.y1 = -100;
+					game.jail.line3.y2 = -100;
 				}
 				game.jail.selected = null;
 			}

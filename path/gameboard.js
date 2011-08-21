@@ -105,6 +105,13 @@ var gameboard = (function(){
 		jailLayer.when('mousedown', function(e){
 			if(!game.jail.line1){
 				game.jail.createLines(e.x, e.y);
+			}else{
+				for(i = 2; i <= 3; i++){
+					game.jail['line'+i].x1 = -100;
+					game.jail['line'+i].x2 = -100;
+					game.jail['line'+i].y1 = -100;
+					game.jail['line'+i].y2 = -100;
+				}
 			}
 
 			if(!game.jail.box1 || !game.jail.box2){
@@ -113,6 +120,8 @@ var gameboard = (function(){
 			game.jail.moveBox(1, -100, -100);
 			game.jail.moveBox(2, -100, -100);
 			game.jail.selected = 1;
+
+			game.jail.points = [];
 			return false;
 		});
 

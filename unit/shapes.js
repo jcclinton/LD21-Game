@@ -122,8 +122,8 @@ game.unit.shapes = Klass({
   },
 
 shapeControl: function(t){
-	this.unit.checkPath.call(this);
-	this.unit.moveUnit.call(this);
+	this.unit.moveUnit.call(this.unit);
+
 	if(this.focused && this.unit.data.isMe){
 	var d = 1;
 	 if ( this.root.keys.left )
