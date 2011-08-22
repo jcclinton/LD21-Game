@@ -116,8 +116,8 @@ game.unit.shapes = Klass({
 shapeControl: function(t){
 	var guards
 		, inmates
-		, heroDist = 75
-		, guardDist = 50
+		, heroDist = game.heroDist
+		, guardDist = game.guardDist
 		, id
 		, x
 		, y
@@ -154,15 +154,23 @@ shapeControl: function(t){
 	this.unit.moveUnit.call(this.unit);
 
 	if(this.unit.data.isMe){
-	var d = this.unit.data.range;
-	 if ( this.root.keys.left )
-		 this.x -= d;
-	 if ( this.root.keys.right )
-		 this.x += d;
-	 if (this.root.keys.up )
-		 this.y -= d;
-	 if (this.root.keys.down )
-		 this.y += d;
+
+		var el = document.getElementById('time');
+		if(el){
+			el.innerHTML = 'Time Remaining: ' + game.timeLeft--;
+		}
+		if(game.timeLeft < 0){
+			game.canvas.stop();
+		}
+		var d = this.unit.data.range;
+		if ( this.root.keys.left )
+			this.x -= d;
+		if ( this.root.keys.right )
+			this.x += d;
+		if (this.root.keys.up )
+			this.y -= d;
+		if (this.root.keys.down )
+			this.y += d;
 
 		if(this.line){
 			this.line.x1 = this.x;

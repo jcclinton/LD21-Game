@@ -99,7 +99,7 @@ game.jail = (function(){
 			, nodes = game.board.graph.nodes
 			, next
 			, d = 70
-			, t = 300
+			, t = 1000
 			, gradient
 			;
 
@@ -109,6 +109,8 @@ game.jail = (function(){
 			}, t);
 			return;
 		}
+
+		me.running = true;
 
 		gradient = {
 	    type : 'radial',
@@ -180,7 +182,7 @@ game.jail = (function(){
 
 		setTimeout(function(){
 			me.spawnGuard();
-		});
+		}, game.guardSpawnTime);
 	};
 
 
@@ -275,7 +277,7 @@ game.jail = (function(){
 
 		setTimeout(function(){
 			me.spawnInmate();
-		}, t);
+		}, game.inmateSpawnTime);
 	};
 
 

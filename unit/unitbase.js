@@ -146,6 +146,8 @@ game.unit.unitBase = function(){
 		if(this.isAtExit()){
 			this.destroy();
 			game.score++;
+			game.guardSpawnTime *= game.timeMod;
+			game.timeLeft += game.timeBump;
 			document.getElementById('score').innerHTML = 'Score: '+game.score;
 		}
 

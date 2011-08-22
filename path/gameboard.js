@@ -63,21 +63,23 @@ var gameboard = (function(){
 			boardLayer.append(line);
 		}
 
-		//inner blocking rectangles
-		for(i = 0, w = obj.boardArray.length; i < w; i++){
-			for(j = 0, h = obj.boardArray[i].length; j < h; j++){
-				if(obj.boardArray[i][j]){
-					im = 10*i;
-					jm = 10*j;
+		if(false){
+			//inner blocking rectangles
+			for(i = 0, w = obj.boardArray.length; i < w; i++){
+				for(j = 0, h = obj.boardArray[i].length; j < h; j++){
+					if(obj.boardArray[i][j]){
+						im = 10*i;
+						jm = 10*j;
 
-					// coordinates start at top left corner of rect
-					// todo: fix this to work with the coords
-					o = {x: im + 5, y: jm - 5};
+						// coordinates start at top left corner of rect
+						// todo: fix this to work with the coords
+						o = {x: im + 5, y: jm - 5};
 
-					rect = new Rectangle(10, 10, o);
-					line.desc = "rect_"+i+'_'+j;
-					//boardLayer.append(rect);
+						rect = new Rectangle(10, 10, o);
+						line.desc = "rect_"+i+'_'+j;
+						//boardLayer.append(rect);
 
+					}
 				}
 			}
 		}
@@ -159,7 +161,7 @@ var gameboard = (function(){
 			inner = [];
 			for(j = 0; j < h; j++){
 				v = 0;
-				if(j > tlimit && j < blimit && i > llimit && i < rlimit){
+				if( false && (j > tlimit && j < blimit && i > llimit && i < rlimit) ){
 					v = Math.random();
 					v = v > 0.2 ? 0 : 1;
 				}

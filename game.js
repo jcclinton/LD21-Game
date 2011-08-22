@@ -11,8 +11,18 @@ var game = (function(){
 			, t
 			, textLayer = new CanvasNode()
 			, elem
+			, elem2
 			, score
+			, time
 			;
+
+		me.timeLeft = 2500;
+		me.timeBump = 150;
+		me.heroDist = 75;
+		me.guardDist = 40;
+		me.inmateSpawnTime = 1200;
+		me.guardSpawnTime = 1500;
+		me.timeMod = 0.9;
 
 		board = this.board = gameboard.create();
 
@@ -31,12 +41,20 @@ var game = (function(){
     elem = E('h1', { id: 'score' });
     elem.appendChild(T('Score: ' + this.score));
     score = new ElementNode(elem, {
-      color: 'gray', x: 100, y: 500, zIndex: 1002, align: 'center', cursor: 'default'
+      color: 'gray', x: 100, y: 500, zIndex: 1002, align: 'left', cursor: 'default'
+    });
+
+
+    elem2 = E('h1', { id: 'time' });
+    elem2.appendChild(T('Time Remaining: ' + me.timeLeft));
+    time = new ElementNode(elem2, {
+      color: 'gray', x: 100, y: 535, zIndex: 1002, align: 'left', cursor: 'default'
     });
 
 		textLayer.desc = "text layer";
 		canvas.append(textLayer);
 		textLayer.append(score);
+		textLayer.append(time);
 
 
 		canvas.when('mousemove', function(e){
