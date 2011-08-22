@@ -1,6 +1,4 @@
 game.unit.map = {
-
-
 	"hero": {
 		"klass": "circle",
 		"init": {
@@ -29,5 +27,4 @@ game.unit.map = {
 		"extending": [
 		]
 	}
-
 };

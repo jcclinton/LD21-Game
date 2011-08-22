@@ -17,7 +17,7 @@ var game = (function(){
 			;
 
 		me.timeLeft = 2500;
-		me.timeBump = 150;
+		me.timeBump = 100;
 		me.heroDist = 75;
 		me.guardDist = 40;
 		me.inmateSpawnTime = 1200;
